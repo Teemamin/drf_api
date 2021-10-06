@@ -21,6 +21,6 @@ urlpatterns = [
     # api-auth comes with the rest framework
     path('api-auth/', include('rest_framework.urls')),
     path('', include('profiles.urls')),
-    path('posts/', include('posts.urls')),
+    path('', include('posts.urls')),
 
 ]
