@@ -2,22 +2,22 @@ from rest_framework import generics, permissions
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Comment
-from .serializers import CommentSerializer, CommentDetailSerializer
+from .models import Like
+from .serializers import LikeSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
 
 
-class CommentList(generics.ListCreateAPIView):
+class LikeList(generics.ListCreateAPIView):
     """
-    List comments or create a comment if logged in.
+    List like or create a like if logged in.
     Extending the ListAPIView means we  won’t have to write the get method  
     and the CreateAPIView takes  care of the post method.
     with generics, the request  is a part of the context object by default.  
     """
-    serializer_class = CommentSerializer
+    serializer_class = LikeSerializer
     # the blw permission is to stop annyms users from commntin
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Comment.objects.all()
+    queryset = Like.objects.all()
 
     def perform_create(self, serializer):
         """
@@ -27,13 +27,11 @@ class CommentList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+class LikeDetail(generics.RetrieveDestroyAPIView):
     """
-    Retrieve a comment, or update or delete it by id if you own it.
-    to update and delete a comment, extend  the RetrieveUpdateDestroyAPI generic view.
-    In order not to have to send  the post id every time I want to edit a comment,  
-    set serializer_class  to CommentDetailSerializer.  
+    Retrieve a like,  or delete it by id if you own it.
+    we didn’t extend the  UpdateAPIView, as we don’t need to update likes. 
     """
     permission_classes = [IsOwnerOrReadOnly]
-    serializer_class = CommentDetailSerializer
-    queryset = Comment.objects.all()
+    serializer_class = LikeSerializer
+    queryset = Like.objects.all()
