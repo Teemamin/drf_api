@@ -2,12 +2,17 @@ from rest_framework import serializers
 from .models import Post
 from likes.models import Like
 
+
 class PostSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     image_field = serializers.ReadOnlyField(source='owner.profile.image.url')
     is_owner = serializers.SerializerMethodField()  # its a read only field
     is_liked = serializers.SerializerMethodField()
+    comments_count = serializers.ReadOnlyField()
+    likes_count = serializers.ReadOnlyField()
+
+
 
     def get_is_owner(self, obj):
         # gets the request context passed to 
@@ -55,5 +60,6 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = [
             'id', 'image', 'owner', 'created_at', 'updated_at', 'title',
-            'content', 'image_field', 'is_owner', 'profile_id', 'image_filter', 'is_liked'
+            'content', 'image_field', 'is_owner', 'profile_id', 'image_filter',
+            'is_liked', 'comments_count', 'likes_count'
         ]
