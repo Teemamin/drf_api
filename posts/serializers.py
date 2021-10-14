@@ -1,17 +1,29 @@
 from rest_framework import serializers
 from .models import Post
+from likes.models import Like
 
 class PostSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     image_field = serializers.ReadOnlyField(source='owner.profile.image.url')
     is_owner = serializers.SerializerMethodField()  # its a read only field
+    is_liked = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         # gets the request context passed to 
         # ProfileSerializer from the view
         request = self.context['request']
         return request.user == obj.owner
+
+    def get_is_liked(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            liked = Like.objects.filter(
+                owner=user, post=obj
+            ).first()
+            # print(liked)
+            return liked.id if liked else None
+        return None
 
     """
     we’ll use the rest  framework’s field level validation methods.  
@@ -43,5 +55,5 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = [
             'id', 'image', 'owner', 'created_at', 'updated_at', 'title',
-            'content', 'image_field', 'is_owner', 'profile_id', 'image_filter'
+            'content', 'image_field', 'is_owner', 'profile_id', 'image_filter', 'is_liked'
         ]
