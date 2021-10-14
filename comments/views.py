@@ -1,7 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework import status, permissions
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -19,12 +18,22 @@ class CommentList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Comment.objects.all()
 
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+
+    filterset_fields = [
+        # the model  fields we’d like to filter against
+        'post'
+    ]
+
     def perform_create(self, serializer):
         """
         to make sure  comments are associated with a user upon creation.  
         We do this with generics by  defining the perform_create method,  
         """
         serializer.save(owner=self.request.user)
+
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):

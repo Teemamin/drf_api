@@ -29,6 +29,7 @@ class ProfileList(generics.ListAPIView):
     filterset_fields = [
         # the model  fields we’d like to filter against
         'owner__following__followed__profile',
+        'owner__followed__owner__profile'
     ]
 
     ordering_fields = [
