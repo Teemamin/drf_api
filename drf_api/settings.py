@@ -72,7 +72,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
-    'teemamin-drf-api.herokuapp.com/',
+    'teemamin-drf-api.herokuapp.com',
     'localhost',
 ]
 # allowed origins for the  network requests made to our server
@@ -155,18 +155,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'drf_api.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-# DATABASES = {
-#     'default': ({
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     } if 'DEV' in os.environ else dj_database_url.parse(
-#         os.environ.get('DATABASE_URL')
-#     ))
-# }
+Database
+https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+DATABASES = {
+    'default': ({
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    } if 'DEV' in os.environ else dj_database_url.parse(
+        os.environ.get('DATABASE_URL')
+    ))
+}
 
-DATABASES = { 'default': dj_database_url.parse('postgres://jttxbactzimmbv:9f77985a0fd620738e6bd16f672a7a55d8e5fc230c909c04c7af71e101888058@ec2-34-250-19-18.eu-west-1.compute.amazonaws.com:5432/da2tlp7kvao5vd') }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
