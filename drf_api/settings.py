@@ -166,8 +166,6 @@ WSGI_APPLICATION = 'drf_api.wsgi.application'
 #     ))
 # }
 
-DATABASES = { 'default': dj_database_url.parse('postgres://jttxbactzimmbv:9f77985a0fd620738e6bd16f672a7a55d8e5fc230c909c04c7af71e101888058@ec2-34-250-19-18.eu-west-1.compute.amazonaws.com:5432/da2tlp7kvao5vd') }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
