@@ -72,14 +72,15 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
-    'teemamin-drf-api.herokuapp.com',
+    os.environ.get('ALLOWED_HOST'),
     'localhost',
 ]
 # allowed origins for the  network requests made to our server
 # CLIENT_ORIGIN variable, which is the  front end app’s url
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
+        os.environ.get('CLIENT_ORIGIN'),
+        os.environ.get('CLIENT_ORIGIN_DEV'),
     ]
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
