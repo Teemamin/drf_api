@@ -72,8 +72,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
-    os.environ.get('ALLOWED_HOST'),
-    'localhost',
+   '*'
 ]
 # allowed origins for the  network requests made to our server
 # CLIENT_ORIGIN variable, which is the  front end app’s url
